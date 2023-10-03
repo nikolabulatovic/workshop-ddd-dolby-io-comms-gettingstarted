@@ -129,6 +129,9 @@ const initUI = async () => {
 						document.getElementById("start-recording-btn").classList.remove("d-none");
 						document.getElementById("stop-recording-btn").classList.add("d-none");
 						document.getElementById("participants-settings").classList.remove("d-none");
+						
+						document.getElementById("start-musicmode-btn").classList.remove("d-none");
+						document.getElementById("echo-cancellation-off-btn").classList.remove("d-none");
 
 						document.getElementById("label-dolby-voice").innerHTML = `Dolby Voice ${
 							conf.params.dolbyVoice ? "On" : "Off"
@@ -307,6 +310,54 @@ const initUI = async () => {
 				//update ui
 				document.getElementById("start-recording-btn").classList.remove("d-none");
 				document.getElementById("stop-recording-btn").classList.add("d-none");
+			})
+			.catch((err) => console.error(err));
+	};
+
+	document.getElementById("start-musicmode-btn").onclick = async () => {
+		// Turn on music mode
+		VoxeetSDK.audio.local
+			.setCaptureMode({mode: "music"})
+			.then((event) => {
+				document.getElementById("stop-musicmode-btn").classList.remove("d-none");
+				document.getElementById("start-musicmode-btn").classList.add("d-none");
+			})
+			.catch((err) => console.error(err));
+	};
+
+	document.getElementById("stop-musicmode-btn").onclick = async () => {
+		// Turn off music mode
+		VoxeetSDK.audio.local
+			.setCaptureMode({mode: "standard"})
+			.then((event) => {
+				document.getElementById("start-musicmode-btn").classList.remove("d-none");
+				document.getElementById("stop-musicmode-btn").classList.add("d-none");
+			})
+			.catch((err) => console.error(err));
+	};
+
+	document.getElementById("echo-cancellation-off-btn").onclick = async () => {
+		const { mode } = await VoxeetSDK.audio.local.getCaptureMode();
+
+		// Turn off echo cancellation
+		VoxeetSDK.audio.local
+			.setCaptureMode({mode, modeOptions: {echoCancellation: "off"}})
+			.then((event) => {
+				document.getElementById("echo-cancellation-on-btn").classList.remove("d-none");
+				document.getElementById("echo-cancellation-off-btn").classList.add("d-none");
+			})
+			.catch((err) => console.error(err));
+	};
+
+	document.getElementById("echo-cancellation-on-btn").onclick = async () => {
+		const { mode } = await VoxeetSDK.audio.local.getCaptureMode();
+
+		// Turn on echo cancellation
+		VoxeetSDK.audio.local
+			.setCaptureMode({mode, modeOptions: {echoCancellation: "on"}})
+			.then((event) => {
+				document.getElementById("echo-cancellation-off-btn").classList.remove("d-none");
+				document.getElementById("echo-cancellation-on-btn").classList.add("d-none");
 			})
 			.catch((err) => console.error(err));
 	};

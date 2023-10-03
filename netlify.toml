@@ -13,5 +13,5 @@
   status = 200
   
 [template.environment]
-  CONSUMER_KEY = "Consumer Key (from dolby.io)"
-  CONSUMER_SECRET = "Consumer Secret (from dolby.io)"
+  CONSUMER_KEY = "Ub_4H_ZA5nKg7pekSaM2JA=="
+  CONSUMER_SECRET = "agmVTke69qxeYLGnjfi6v6yxaLZ0nqAfOE8jEb0LIi0="
